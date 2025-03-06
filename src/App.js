@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import * as pdfjsLib from 'pdfjs-dist/build/pdf';
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
+import { pdfjs } from 'react-pdf';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+// Configure the worker from CDN (important to avoid build issues)
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 function App() {
   const [pdfText, setPdfText] = useState('');
@@ -14,7 +14,7 @@ function App() {
 
       reader.onload = async (e) => {
         const typedArray = new Uint8Array(e.target.result);
-        const pdf = await pdfjsLib.getDocument(typedArray).promise;
+        const pdf = await pdfjs.getDocument(typedArray).promise;
         let text = '';
 
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
@@ -34,14 +34,13 @@ function App() {
 
   const extractTextFromPage = async (page) => {
     const textContent = await page.getTextContent();
-    const pageText = textContent.items.map(item => item.str).join(' ');
-    return pageText;
+    return textContent.items.map(item => item.str).join(' ');
   };
 
   return (
     <div style={styles.container}>
       <h1>Research Management System</h1>
-      <p>Welcome to the Research Management System.</p>
+      <p>Upload a PDF to extract its text content.</p>
 
       <div>
         <input type="file" accept="application/pdf" onChange={handleFileChange} />
