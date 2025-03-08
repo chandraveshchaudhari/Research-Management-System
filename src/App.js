@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { pdfjs } from 'react-pdf';
-import { Search, Upload, FileText, ChevronDown, BookOpen } from 'lucide-react';
 
 // Configure the worker from CDN
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
@@ -62,8 +61,9 @@ const App = () => {
       <header className="bg-blue-700 text-white shadow-md">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="bg-white p-2 rounded-md">
-              <BookOpen className="h-8 w-8 text-blue-700" />
+            <div className="bg-white p-2 rounded-md flex items-center justify-center">
+              {/* Simple book icon using HTML/CSS */}
+              <div className="text-blue-700 text-2xl font-bold">📚</div>
             </div>
             <h1 className="text-2xl font-bold">Research Management System</h1>
           </div>
@@ -82,13 +82,13 @@ const App = () => {
                 type="submit" 
                 className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-r-md flex items-center"
               >
-                <Search className="h-5 w-5" />
+                <span className="text-white">🔍</span>
               </button>
             </form>
             
             {/* Upload Button */}
             <label className="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-md cursor-pointer flex items-center space-x-2">
-              <Upload className="h-5 w-5" />
+              <span>📤</span>
               <span>Upload</span>
               <input 
                 type="file" 
@@ -105,20 +105,20 @@ const App = () => {
                 onClick={toggleDropdown}
               >
                 <span>Ask LLM</span>
-                <ChevronDown className="h-4 w-4" />
+                <span>▼</span>
               </button>
               
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                   <ul className="py-1">
                     <li 
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
                       onClick={() => selectFilter('All Documents')}
                     >
                       All Documents
                     </li>
                     <li 
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
                       onClick={() => selectFilter('Filter by Document')}
                     >
                       Filter by Document
@@ -142,7 +142,7 @@ const App = () => {
           {pdfText ? (
             <div className="border rounded-md p-4">
               <h3 className="text-lg font-medium mb-3 flex items-center">
-                <FileText className="h-5 w-5 mr-2 text-blue-600" />
+                <span className="mr-2 text-blue-600">📄</span>
                 Extracted PDF Text
               </h3>
               <div className="bg-gray-50 p-4 rounded border h-96 overflow-auto font-mono text-sm whitespace-pre-wrap">
@@ -151,7 +151,7 @@ const App = () => {
             </div>
           ) : (
             <div className="text-center py-12 bg-gray-50 rounded-md border-2 border-dashed border-gray-300">
-              <Upload className="h-12 w-12 mx-auto text-gray-400 mb-3" />
+              <div className="text-5xl mx-auto text-gray-400 mb-3">📤</div>
               <p className="text-gray-600 mb-2">No document loaded</p>
               <p className="text-gray-500 text-sm">Upload a PDF file to view its content</p>
             </div>
